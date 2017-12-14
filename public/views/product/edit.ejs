@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adminn</title>
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    
+    <style>
+input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+input[type=number], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+    width: 100px;
+    background-color: #e52325;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #002092;
+}
+
+
+</style>
+    
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container">
+            <div class="navbar-header"><a class="navbar-brand navbar-link" href="#">Admin Panel</a>
+                <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+            </div>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active" role="presentation"><a href="https://pizza-bites-shamahoque.c9users.io">User Site</a></li>
+                    <li class="active" class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Admin <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li role="presentation"><a href="#">Setting </a></li>
+                            <li role="presentation"><a href="#">Help </a></li>
+                            <li role="presentation"><a href="/signin">Logout </a></li>
+                        </ul>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="row">
+        <div class="col-md-2">
+            <ul class="nav nav-pills nav-stacked">
+                 <li class="active"><a href="/products/new">New Product </a></li>
+                <li class="active"><a href="/products/all">Available Product </a></li>
+                <li class="active"><a href="/product/orders/all">Orderd Item</a></li>
+                <li class="active"><a href="#">Promotion </a></li>
+            </ul>
+        </div>
+        <div class="col-lg-9 col-lg-offset-0 col-md-8 col-md-offset-1">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Edit Product Item </h3></div>
+                <div class="panel-body"><span> </span>
+                    <div class="col-lg-6 col-md-6">
+                        
+                         <label for="fname">Pizza Name</label>
+                        <input type="text" id="pname"  placeholder="Pizza Name" value=<%=request.product.name%>>
+                        
+                        <label for="country">Category</label>
+                        <select id="category" name="category" >
+                            <option value =<%=request.product.category%>><%=request.product.category%></option>
+                          <option value="Beef">Beef</option>
+                          <option value="Chicken">Chicken</option>
+                          <option value="Vegetable">Vegetable</option>
+                          <option value="Chesse">Chesse</option>
+                        </select>
+  
+
+                        <label for="lname">Description</label>
+                        <input type="text" id="dsp"  placeholder="Description" value=<%=request.product.description%>>
+
+                        <label for="country">Image Link</label>
+                        <input type="text" id="image"  placeholder="Image link" value=<%=request.product.image%>>
+                        
+                       
+                        <label for="size">Size</label>
+                        <select id="size" name="size">
+                            <option value =<%=request.product.size%>><%=request.product.size%></option>
+                          <option value="Small 6'">Small 6'</option>
+                          <option value="Medium 10'">Medium 10'</option>
+                          <option value="large 12'">Large 12'</option>
+                        </select>
+                        
+                        <label for="country">Price</label>
+                        <input type="number" id="price" n placeholder="Price" value=<%=request.product.price%>>
+                       
+                      
+                        <button type=submit id="submit" class="btn btn-default" >Submit</button>
+       
+                        
+                    </div>
+                    <div class="col-lg-6 col-md-6"><img src=<%=request.product.image%>   width="250" height="200">
+                    <h4>Pizza Name: <%=request.product.name%></h4>
+                    <h4>Pizza Description: <%=request.product.description%></h4>
+                    <h4>Pizza Category: <%=request.product.category%></h4>
+                    <h4>Pizza Size: <%=request.product.size%></h4>
+                    
+                    <h4>Pizza Price: <%=request.product.price%></h4>
+                    <button type=submit id="delete" class="btn btn-default" >Delete</button>
+                    
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+     <script>
+        
+            var productID = <%- JSON.stringify(request.product._id) %>;
+            var product = {};
+             $("#pname").change(function()
+            {
+               
+                product.name= $("#pname").val();
+            
+            });
+             $("#category").change(function()
+            {
+                product.category= $("#category").val();
+            
+            });
+            
+             $("#dsp").change(function()
+            {
+                product.description= $("#dsp").val();
+            
+            });
+                $("#image").change(function()
+            {
+                product.image= $("#image").val();
+            
+            });
+            
+             $("#size").change(function()
+            {
+                product.size= $("#size").val();
+            
+            });
+             $("#price").change(function()
+            {
+                 product.price=undefined;
+                product.price= $("#price").val();
+            
+            });
+            $("#submit").click(function(){
+                console.log(product);
+                $.ajax({
+                    method: "PUT",
+                    url: "/api/products/edit/"+productID,
+                    data: product
+                }).done(function(response){
+                    console.log(response);
+                    window.location.replace("/products/edit/"+response._id);
+                });
+            });
+             $('#delete').click(function(){
+            $.ajax({
+              method:"DELETE",
+              url:'/api/products/'+productID,
+              data: product
+            }).done(function(response){
+              console.log(response);
+              window.location.replace("/products/all");
+            }).fail(function(response){
+              $("#error").text(JSON.parse(response.responseText).message);
+                console.log(JSON.parse(response.responseText).message);
+            });
+          });
+        </script>
+</body>
+
+</html>

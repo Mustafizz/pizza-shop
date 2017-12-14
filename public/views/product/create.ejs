@@ -1,0 +1,91 @@
+<html>
+    <head>
+        <tittle>
+       // New Products
+        </tittle>
+    </head>
+    <body>
+        <h1>
+            Create Products
+        </h1>
+        <div>Name:
+        <input type="name" id ="pname"/>
+        </div><br>
+        <div>Code
+        <input type="number" id ="code"/>
+        </div><br>
+        <div>Description:
+        <textarea id="dsp" ></textarea>
+        </div> <br>
+          <div>image:
+        <input type="name" id ="image"/>
+        </div><br>
+        <div>Price:
+        <input type="number" id ="price"/>
+        </div><br>
+        
+        
+        <div id="error"></div>
+        <button id="submit">Submit</button>
+        <script src="/lib/jquery/dist/jquery.min.js"></script>
+        <script>
+            var product={
+                name :"" ,
+                code:null,
+                description : "",
+                image:"",
+                price:null 
+                };
+            $("#pname").change(function()
+            {
+               
+                product.name= $("#pname").val();
+            
+            });
+             $("#code").change(function()
+            {
+                product.code= $("#code").val();
+            
+            });
+            
+             $("#dsp").change(function()
+            {
+                product.description= $("#dsp").val();
+            
+            });
+                $("#image").change(function()
+            {
+                product.image= $("#image").val();
+            
+            });
+            
+             $("#price").change(function()
+            {
+                 product.price=undefined;
+                product.price= $("#price").val();
+            
+            });
+            
+            
+            
+            
+            $("#submit").click(function(){
+                $.ajax({
+                    method: "POST",
+                    url: "/api/products",
+                    data: product  
+                    
+                }).done(function(response){
+                    console.log(response);
+                     window.location.replace("/products/"+response._id); 
+                }).fail(function(response){
+                    $("#error").text(JSON.parse(response.responseText).message);
+                   console.log(response); 
+                });
+                
+            });
+            
+        </script>
+        </body>
+    
+</html>

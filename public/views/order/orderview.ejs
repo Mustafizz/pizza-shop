@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adminn</title>
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container">
+            <div class="navbar-header"><a class="navbar-brand navbar-link" href="#">Admin Panel</a>
+                <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+            </div>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active" role="presentation"><a href="https://pizza-bites-shamahoque.c9users.io">User Site</a></li>
+                    <li class="active" class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Admin <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li role="presentation"><a href="#">Setting </a></li>
+                            <li role="presentation"><a href="#">Help </a></li>
+                            <li role="presentation"><a href="/signin">Logout </a></li>
+                        </ul>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="row">
+        <div class="col-md-2">
+           <ul class="nav nav-pills nav-stacked">
+                 <li class="active"><a href="/products/new">New Product </a></li>
+                <li class="active"><a href="/products/all">Available Product </a></li>
+                <li class="active"><a href="/product/orders/all">Orderd Item</a></li>
+                <li class="active"><a href="#">Promotion </a></li>
+            </ul>
+        </div>
+        <div class="col-lg-9 col-lg-offset-0 col-md-8 col-md-offset-1">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title"> </h3>Order View</div>
+                <div class="panel-body"><span> </span>
+                    <div class="col-lg-6 col-md-8 col-md-offset-2">
+                        <div>
+        <img src= <%=request.order.photo %>  width="300" height="200">
+        <h3>Order ID:  <%=request.order._id %></h3>
+        <% console.log(request.order)%>
+        <h4>Customer Name: <%=request.order.cname%></h4>
+        <h4>Phone Number: <%=request.order.phone%></h4>
+        <h4>Customer Address: <%=request.order.adress%></h4>
+        <h4>Product Name:  <%=request.order.pname%></h4>
+        <h4>Product Size:  <%=request.order.size%></h4>
+        <h4>Product Price:  <%=request.order.price%></h4>
+        
+        <p> <%= request.order.content %> </p>
+        
+        <p>
+            <h2> Date: <%= request.order.created %></h2> 
+            </p>
+      
+            </p>
+        
+        <button type=submit id="del" class="btn btn-default" >Delete</button>
+      
+            </p>
+            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+     var orderID = <%- JSON.stringify(request.order._id) %>;
+            var order= {};
+        $('#del').click(function(){
+            $.ajax({
+              method:"DELETE",
+              url:'/api/orders/'+orderID,
+              data: order
+            }).done(function(response){
+              console.log(response);
+              window.location.replace("/product/orders/all");
+            }).fail(function(response){
+              $("#error").text(JSON.parse(response.responseText).message);
+                console.log(JSON.parse(response.responseText).message);
+            });
+          });
+    </script>
+</body>
+
+</html>
